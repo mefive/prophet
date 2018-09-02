@@ -1,4 +1,5 @@
 from flask import Flask
+
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -13,8 +14,9 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    from .main import main as blue_print
-    app.register_blueprint(blue_print)
+    from .api import api
+
+    app.register_blueprint(api)
 
     migrate = Migrate(app, db)
 

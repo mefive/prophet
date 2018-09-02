@@ -1,7 +1,7 @@
-from .. import main
+from . import api
 from flask import jsonify
 
 
-@main.route('/stock')
+@api.route('/stock')
 def index():
     return jsonify(dict(code=0, data=[]))
