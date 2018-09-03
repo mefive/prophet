@@ -16,7 +16,7 @@ def create_app(config_name):
 
     from .api import api
 
-    app.register_blueprint(api)
+    app.register_blueprint(blueprint=api, url_prefix='/api')
 
     migrate = Migrate(app, db)
 
