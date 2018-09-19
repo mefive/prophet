@@ -1,5 +1,6 @@
 from .. import db
 
+
 class StockBasic(db.Model):
     __tablename__ = 'stock_basic'
 

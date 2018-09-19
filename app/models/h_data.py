@@ -1,5 +1,6 @@
 from .. import db
 
+
 class HData(db.Model):
     __tablename__ = 'h_data'
 
@@ -11,5 +12,3 @@ class HData(db.Model):
     close = db.Column(db.Integer)
     volume = db.Column(db.BigInteger)
     amount = db.Column(db.BigInteger)
-
-
