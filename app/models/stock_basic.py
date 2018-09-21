@@ -1,26 +1,28 @@
-from .. import db
+from flask_sqlalchemy import SQLAlchemy
+
+Column = SQLAlchemy.Column
 
 
-class StockBasic(db.Model):
+class StockBasic(SQLAlchemy.Model):
     __tablename__ = 'stock_basic'
 
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(20), index=True)
-    name = db.Column(db.Unicode(50))
-    industry = db.Column(db.String(100))
-    area = db.Column(db.String(100))
-    pe = db.Column(db.String(50))
-    outstanding = db.Column(db.BigInteger)
-    totals = db.Column(db.BigInteger)
-    total_assets = db.Column(db.BigInteger)
-    liquid_assets = db.Column(db.BigInteger)
-    fixed_assets = db.Column(db.BigInteger)
-    esp = db.Column(db.Integer)
-    bvps = db.Column(db.Integer)
-    pb = db.Column(db.Integer)
-    time_to_market = db.Column(db.Date)
-    undp = db.Column(db.Integer)
-    perundp = db.Column(db.Integer)
-    rev = db.Column(db.Integer)
-    profit = db.Column(db.Integer)
-    npr = db.Column(db.Integer)
+    id = Column(Column.Integer, primary_key=True)
+    code = Column(Column.String(20), index=True)
+    name = Column(Column.Unicode(50))
+    industry = Column(Column.String(100))
+    area = Column(Column.String(100))
+    pe = Column(Column.String(50))
+    outstanding = Column(Column.BigInteger)
+    totals = Column(Column.BigInteger)
+    total_assets = Column(Column.BigInteger)
+    liquid_assets = Column(Column.BigInteger)
+    fixed_assets = Column(Column.BigInteger)
+    esp = Column(Column.Integer)
+    bvps = Column(Column.Integer)
+    pb = Column(Column.Integer)
+    time_to_market = Column(Column.Date)
+    undp = Column(Column.Integer)
+    perundp = Column(Column.Integer)
+    rev = Column(Column.Integer)
+    profit = Column(Column.Integer)
+    npr = Column(Column.Integer)

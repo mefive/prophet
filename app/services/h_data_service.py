@@ -4,6 +4,7 @@ import time
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
 from flask_sqlalchemy import SQLAlchemy
+from injector import inject
 
 from ..models.h_data import HData
 
@@ -17,6 +18,7 @@ index_codes = {
 
 
 class HDataService:
+    @inject
     def __init__(self, session: SQLAlchemy.Session):
         self.session = session
 
@@ -61,8 +63,3 @@ class HDataService:
 
         print('done')
 
-
-if __name__ == 'main':
-    from .. import db
-
-    service = HDataService(db.session)

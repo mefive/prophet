@@ -2,11 +2,24 @@ from flask import Flask
 
 from config import config
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_injector import FlaskInjector, request
+from .services.h_data_service import HDataService
 
 db = SQLAlchemy()
 
 from . import models
+
+def configure(binder):
+    binder.bind(
+        SQLAlchemy,
+        to=db,
+        scope=request
+    )
+    binder.bind(
+        HDataService,
+        to=HDataService(),
+        scope=request
+    )
 
 
 def create_app(config_name):
@@ -18,6 +31,8 @@ def create_app(config_name):
 
     app.register_blueprint(blueprint=api, url_prefix='/api')
 
-    migrate = Migrate(app, db)
+    db.init_app(app)
+
+    FlaskInjector(app=app, modules=[configure])
 
     return app
