@@ -1,5 +1,5 @@
 from flask import Flask, current_app
-from injector import Injector, Key
+from injector import Injector, Key, Module, inject, provider
 
 from config import config
 from flask_sqlalchemy import SQLAlchemy
@@ -11,10 +11,17 @@ from .services.h_data_service import HDataService
 
 def configure(binder):
     binder.bind(Key('db'), db)
+    binder.bind()
+
+
+class ConfigureModule(Module):
+    @provider
+    def provide_db(self) -> SQLAlchemy:
+        return db
 
 
 def init_db():
-    injector = Injector(configure)
+    injector = Injector(ConfigureModule)
     h_data_service = injector.get(HDataService)
     current_app.h_data_service = h_data_service
 
