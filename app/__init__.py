@@ -1,5 +1,5 @@
 from flask import Flask, current_app
-import pinject
+from injector import Injector, Key
 
 from config import config
 from flask_sqlalchemy import SQLAlchemy
@@ -9,14 +9,13 @@ db = SQLAlchemy()
 from .services.h_data_service import HDataService
 
 
-class MyBindingSpec(pinject.BindingSpec):
-    def configure(self, bind):
-        bind('db_session', to_instance=db.session)
+def configure(binder):
+    binder.bind(Key('db'), db)
 
 
 def init_db():
-    obj_graph = pinject.new_object_graph(binding_specs=MyBindingSpec)
-    h_data_service = obj_graph.provide(HDataService)
+    injector = Injector(configure)
+    h_data_service = injector.get(HDataService)
     current_app.h_data_service = h_data_service
 
 

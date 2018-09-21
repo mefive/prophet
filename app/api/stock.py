@@ -6,5 +6,5 @@ from ..services.h_data_service import HDataService
 
 @api.route('/stock')
 def index():
-    print(current_app.db)
+    current_app.h_data_service.import_index_h_data()
     return jsonify(dict(code=0, data=[]))
