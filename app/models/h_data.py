@@ -1,15 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
+from .. import db
 
-Column = SQLAlchemy.Column
 
-class HData(SQLAlchemy.Model):
-    __tablename__ = 'h_data'
-
-    id = Column(Column.Integer, primary_key=True)
-    code = Column(Column.String(10), index=True)
-    date = Column(Column.Date)
-    open = Column(Column.Integer)
-    high = Column(Column.Integer)
-    close = Column(Column.Integer)
-    volume = Column(Column.BigInteger)
-    amount = Column(Column.BigInteger)
+class HData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(10), index=True)
+    date = db.Column(db.Date)
+    open = db.Column(db.Integer)
+    high = db.Column(db.Integer)
+    close = db.Column(db.Integer)
+    volume = db.Column(db.BigInteger)
+    amount = db.Column(db.BigInteger)

@@ -3,8 +3,7 @@ import tushare
 import time
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from flask_sqlalchemy import SQLAlchemy
-from injector import inject
+from flask_sqlalchemy import SQLAlchemy, SessionBase
 
 from ..models.h_data import HData
 
@@ -18,9 +17,10 @@ index_codes = {
 
 
 class HDataService:
-    @inject
-    def __init__(self, session: SQLAlchemy.Session):
-        self.session = session
+    def __init__(self, db_session: SessionBase):
+        print('h data service init')
+        print(db_session)
+        self.db_session = db_session
 
     def import_index_h_data(self):
         start = parser.parse('2010-01-01').date()
@@ -57,9 +57,9 @@ class HDataService:
                     amount=row['amount']
                 )
 
-                self.session.add(h_data)
+                self.db_session.add(h_data)
 
-            self.session.commit()
+            self.db_session.commit()
 
         print('done')
 

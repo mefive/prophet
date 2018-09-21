@@ -1,25 +1,23 @@
-from flask import Flask
+from flask import Flask, current_app
+import pinject
 
 from config import config
 from flask_sqlalchemy import SQLAlchemy
-from flask_injector import FlaskInjector, request
-from .services.h_data_service import HDataService
 
 db = SQLAlchemy()
 
-from . import models
+from .services.h_data_service import HDataService
 
-def configure(binder):
-    binder.bind(
-        SQLAlchemy,
-        to=db,
-        scope=request
-    )
-    binder.bind(
-        HDataService,
-        to=HDataService(),
-        scope=request
-    )
+
+class MyBindingSpec(pinject.BindingSpec):
+    def configure(self, bind):
+        bind('db_session', to_instance=db.session)
+
+
+def init_db():
+    obj_graph = pinject.new_object_graph(binding_specs=MyBindingSpec)
+    h_data_service = obj_graph.provide(HDataService)
+    current_app.h_data_service = h_data_service
 
 
 def create_app(config_name):
@@ -33,6 +31,9 @@ def create_app(config_name):
 
     db.init_app(app)
 
-    FlaskInjector(app=app, modules=[configure])
+    with app.app_context():
+        init_db()
+
+    # FlaskInjector(app=app, modules=[configure])
 
     return app
