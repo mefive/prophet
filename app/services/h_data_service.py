@@ -3,8 +3,7 @@ import tushare
 import time
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from flask_sqlalchemy import SQLAlchemy, SessionBase
-from injector import inject
+from flask_sqlalchemy import SQLAlchemy
 
 from ..models.h_data import HData
 
@@ -18,7 +17,6 @@ index_codes = {
 
 
 class HDataService:
-    @inject
     def __init__(self, db: SQLAlchemy):
         self.db = db
 
