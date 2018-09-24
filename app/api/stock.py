@@ -1,10 +1,10 @@
 from . import api
 from flask import jsonify
-from flask_sqlalchemy import SQLAlchemy
-from ..services.h_data_service import HDataService
+from flask_sqlalchemy import SQLAlchemy, SessionBase
+from ..services import StockBasicService
 
 
 @api.route('/stock')
-def index(db: SQLAlchemy, service: HDataService):
-    service.import_index_h_data()
+def index(service: StockBasicService):
+    service.import_stock_basic()
     return jsonify(dict(code=0, data=[]))

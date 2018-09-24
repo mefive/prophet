@@ -3,8 +3,8 @@ import tushare
 import time
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from flask_sqlalchemy import SQLAlchemy
 
+from .service_base import ServiceBase
 from ..models.h_data import HData
 
 index_codes = {
@@ -16,10 +16,7 @@ index_codes = {
 }
 
 
-class HDataService:
-    def __init__(self, db: SQLAlchemy):
-        self.db = db
-
+class HDataService(ServiceBase):
     def import_index_h_data(self):
         start = parser.parse('2010-01-01').date()
         end = parser.parse('2010-12-31')
@@ -55,9 +52,9 @@ class HDataService:
                     amount=row['amount']
                 )
 
-                self.db.session.add(h_data)
+                self.session.add(h_data)
 
-            self.db.session.commit()
+            self.session.commit()
 
         print('done')
 

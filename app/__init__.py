@@ -3,7 +3,7 @@ from flask_injector import FlaskInjector
 
 from flask_sqlalchemy import SQLAlchemy
 from config import config
-from .config_module.db import DBModule
+from .config_module.session import SessionModule
 from .config_module.services import  ServicesModule
 
 
@@ -19,6 +19,6 @@ def create_app(config_name):
 
     app.register_blueprint(blueprint=api, url_prefix='/api')
 
-    FlaskInjector(app=app, modules=[DBModule(db), ServicesModule])
+    FlaskInjector(app=app, modules=[SessionModule(db.session), ServicesModule])
 
     return app
