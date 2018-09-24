@@ -1,29 +1,11 @@
-from flask import Flask, current_app
-from injector import Injector, Key, Module, inject, provider
+from flask import Flask
+from flask_injector import FlaskInjector
 
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
-
-from .services.h_data_service import HDataService
-
-
-def configure(binder):
-    binder.bind(Key('db'), db)
-    binder.bind()
-
-
-class ConfigureModule(Module):
-    @provider
-    def provide_db(self) -> SQLAlchemy:
-        return db
-
-
-def init_db():
-    injector = Injector(ConfigureModule)
-    h_data_service = injector.get(HDataService)
-    current_app.h_data_service = h_data_service
+from .config.db_module import DBModule
+from .config.services_module import ServicesModule
 
 
 def create_app(config_name):
@@ -31,15 +13,14 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
+    db = SQLAlchemy()
+
+    db.init_app(app)
+
     from .api import api
 
     app.register_blueprint(blueprint=api, url_prefix='/api')
 
-    db.init_app(app)
-
-    with app.app_context():
-        init_db()
-
-    # FlaskInjector(app=app, modules=[configure])
+    FlaskInjector(app=app, modules=[DBModule(db), ServicesModule()])
 
     return app
