@@ -1,4 +1,5 @@
-from sqlalchemy.ext.declarative import declarative_base
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
-from . import stock_basic, h_data
+db = SQLAlchemy()
+
+from . import daily
