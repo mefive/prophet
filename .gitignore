@@ -3,3 +3,4 @@ venv
 *.egg-info
 *.sqlite
 **__pycache__/
+**/migrations/
