@@ -2,34 +2,27 @@ import tushare
 import pandas
 from .service_base import ServiceBase
 from ..models.stock_basic import StockBasic
+from . import pro
 
 
 class StockBasicService(ServiceBase):
     def import_stock_basic(self):
-        df: pandas.DataFrame = tushare.get_stock_basics(date='2018-08-17')
+        df: pandas.DataFrame = pro.query('stock_basic')
 
         if df is not None:
             for index, row in df.iterrows():
                 stock_basic = StockBasic(
-                    code=index,
-                    name=row['name'],
-                    industry=row['industry'],
-                    area=row['area'],
-                    pe=row['pe'],
-                    outstanding=row['outstanding'],
-                    totals=row['totals'],
-                    total_assets=row['totalAssets'],
-                    liquid_assets=row['liquidAssets'],
-                    fixed_assets=row['fixedAssets'],
-                    esp=row['esp'],
-                    bvps=row['bvps'],
-                    pb=row['pb'],
-                    time_to_market=row['timeToMarket'] if row['timeToMarket'] != 0 else None,
-                    undp=row['undp'],
-                    perundp=row['perundp'],
-                    rev=row['rev'],
-                    profit=row['profit'],
-                    npr=row['npr'],
+                    ts_code=row.get('ts_code'),
+                    symbol=row.get('symbol'),
+                    name=row.get('name'),
+                    fullname=row.get('fullname'),
+                    enname=row.get('enname'),
+                    exchange_id=row.get('exchange_id'),
+                    curr_type=row.get('curr_type'),
+                    list_status=row.get('list_status'),
+                    list_date=row.get('list_date'),
+                    delist_date=row.get('delist_date'),
+                    is_hs=row.get('is_hs'),
                 )
 
                 self.session.add(stock_basic)

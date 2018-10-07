@@ -1,5 +1,13 @@
 from injector import Module, provider
-
+from flask_sqlalchemy import SessionBase
+from ..services.stock_basic_service import StockBasicService
+from ..services.daily_service import DailyService
 
 class ServicesModule(Module):
-    pass
+    @provider
+    def provide_stock_basic_service(self, session: SessionBase) -> StockBasicService:
+        return StockBasicService(session)
+
+    @provider
+    def provide_daily_service(self, session: SessionBase) -> DailyService:
+        return DailyService(session)

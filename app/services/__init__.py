@@ -1,2 +1,3 @@
-from .h_data_service import HDataService
-from .stock_basic_service import StockBasicService
+import tushare
+
+pro = tushare.pro_api('11369546d806839387197960d6476f4857ded7654749e9a084e9be37')
