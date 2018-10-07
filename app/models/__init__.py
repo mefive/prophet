@@ -2,4 +2,4 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-from . import daily, stock_basic
+from . import daily, stock_basic, daily_basic

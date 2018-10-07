@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, BigInteger, Numeric, String, Date, DECIMAL
+from sqlalchemy import Column, Integer, Numeric, String, Date
 from app.models import db
 
 class Daily(db.Model):
