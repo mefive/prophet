@@ -14,8 +14,10 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-                              'mysql+mysqldb://mefive:Mark980696@@@localhost/stock?charset=utf8&use_unicode=1'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://{}:{}@localhost/stock?charset=utf8&use_unicode=1'.format(
+        os.environ.get('DEV_DB_USER'),
+        os.environ.get('DEV_DB_PASSWORD'),
+    )
 
 
 config = {

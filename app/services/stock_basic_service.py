@@ -6,6 +6,10 @@ from . import pro
 
 
 class StockBasicService(ServiceBase):
+    def get_page(self):
+        query = self.session.query(StockBasic)
+        return query.limit(20)
+
     def import_stock_basic(self):
         df: pandas.DataFrame = pro.query('stock_basic')
 
