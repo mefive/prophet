@@ -6,6 +6,9 @@ from ..models.stock_basic import StockBasic
 
 
 class DailyBasicService(ServiceBase):
+    def get_model(self):
+        return StockBasic
+
     def import_all_daily_basic(self):
         query = self.session.query(StockBasic)
         stocks = query.limit(1)

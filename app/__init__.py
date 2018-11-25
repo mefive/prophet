@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g
 from flask_injector import FlaskInjector
 
 from flask_sqlalchemy import SQLAlchemy
@@ -20,5 +20,8 @@ def create_app(config_name):
     app.register_blueprint(blueprint=api, url_prefix='/api')
 
     FlaskInjector(app=app, modules=[SessionModule(db.session), ServicesModule])
+
+    with app.app_context():
+        g.db = db
 
     return app

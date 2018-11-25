@@ -1,4 +1,3 @@
-import tushare
 import pandas
 from .service_base import ServiceBase
 from ..models.stock_basic import StockBasic
@@ -6,9 +5,8 @@ from . import pro
 
 
 class StockBasicService(ServiceBase):
-    def get_page(self):
-        query = self.session.query(StockBasic)
-        return query.limit(20)
+    def get_model(self):
+        return StockBasic
 
     def import_stock_basic(self):
         df: pandas.DataFrame = pro.query('stock_basic')

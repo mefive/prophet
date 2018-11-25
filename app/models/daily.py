@@ -1,7 +1,10 @@
 from sqlalchemy import Column, Integer, Numeric, String, Date
-from app.models import db
+from . import db
 
 class Daily(db.Model):
+    """日线行情
+    获取股票行情数据，前复权数据．
+    """
     __tablename__ = 'daily'
 
     id = Column(Integer, primary_key=True)

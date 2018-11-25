@@ -1,12 +1,14 @@
 import pandas
 from ..models.daily import Daily
 from ..models.stock_basic import StockBasic
-
 from . import pro
 from .service_base import ServiceBase
 
 
 class DailyService(ServiceBase):
+    def get_model(self):
+        return StockBasic
+
     def import_all_stock_daily(self):
         query = self.session.query(StockBasic)
         stocks = query.limit(2)
@@ -14,8 +16,7 @@ class DailyService(ServiceBase):
         for stock in stocks:
             self.import_daily(stock.ts_code)
 
-
-    def import_daily(self, ts_code, trade_date = None):
+    def import_daily(self, ts_code, trade_date=None):
         print('=== import daily ===')
 
         df: pandas.DataFrame = pro.query('daily',
@@ -41,6 +42,5 @@ class DailyService(ServiceBase):
                 self.session.add(daily)
 
             self.session.commit()
-
 
         print('== import daily done')

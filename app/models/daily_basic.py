@@ -1,8 +1,12 @@
 from sqlalchemy import Column, Integer, Numeric, String, Date
-from app.models import db
-
+from . import db
+from marshmallow import Schema
 
 class DailyBasic(db.Model):
+    """每日指标
+
+    获取全部股票每日重要的基本面指标，可用于选股分析、报表展示等。
+    """
     __tablename__ = 'daily_basic'
 
     id = Column(Integer, primary_key=True)
@@ -22,3 +26,9 @@ class DailyBasic(db.Model):
     total_mv = Column(Numeric(12, 4))
     circ_mv = Column(Numeric(12, 4))
 
+
+class DailyBasicSchema(Schema):
+    class Meta:
+        fields = ('id', 'ts_code', 'trade_date', 'close', 'turnover_rate', 'volume_ratio',
+                  'pe', 'pe_ttm', 'pb', 'ps', 'ps_ttm', 'total_share', 'float_share',
+                  'free_share', 'total_mv', 'circ_mv')

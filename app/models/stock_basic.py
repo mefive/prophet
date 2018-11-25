@@ -1,9 +1,13 @@
-from sqlalchemy import Column, Integer, BigInteger, Numeric, String, Date
-from app.models import db
-from marshmallow import Schema, fields
+from sqlalchemy import Column, Integer, String, Date
+from . import db
+from marshmallow import Schema
 
 
 class StockBasic(db.Model):
+    """股票列表
+
+    基础信息数据，包括股票代码、名称、上市日期、退市日期等
+    """
     __tablename__ = 'stock_basic'
 
     id = Column(Integer, primary_key=True)
@@ -21,11 +25,5 @@ class StockBasic(db.Model):
 
 
 class StockBasicSchema(Schema):
-    id = fields.Integer()
-    ts_code = fields.Str()
-    symbol = fields.Str()
-    name = fields.Str()
-    list_date = fields.Date()
-
-
-stockBasicSchema = StockBasicSchema()
+    class Meta:
+        fields = ('id', 'ts_code', 'symbol', 'name', 'list_date')
