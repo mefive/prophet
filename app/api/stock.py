@@ -4,8 +4,10 @@ from flask import jsonify, request
 from ..services.stock_basic_service import StockBasicService
 from ..services.daily_service import DailyService
 from ..services.daily_basic_service import DailyBasicService
+from ..services.index_daily_service import IndexDailyService
 from ..models.stock_basic import StockBasicSchema
 from ..models.daily_basic import DailyBasicSchema
+from ..models.index_basic import IndexBasicSchema
 
 
 # @api.route('/import/stockBasic')
@@ -57,6 +59,21 @@ def get_daily_basic_list(service: DailyBasicService):
         'code': '0',
         'data': {
             'data': [daily_basic_schema.dump(record).data for record in records],
+            'total': total,
+        }
+    })
+
+
+@api.route('/indexBasic/list')
+def index_basic_list(service: IndexDailyService):
+    records, total = service.get_page(1, 20)
+
+    schema = IndexBasicSchema()
+
+    return jsonify({
+        'code': '0',
+        'data': {
+            'data': [schema.dump(record).data for record in records],
             'total': total,
         }
     })

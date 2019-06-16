@@ -27,4 +27,4 @@ class IndexBasic(db.Model):
 
 class IndexBasicSchema(Schema):
     class Meta:
-        fields = ('id', 'ts_code', 'name')
+        fields = ('id', 'ts_code')

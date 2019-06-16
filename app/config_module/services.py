@@ -3,6 +3,7 @@ from flask_sqlalchemy import SessionBase
 from ..services.stock_basic_service import StockBasicService
 from ..services.daily_service import DailyService
 from ..services.daily_basic_service import DailyBasicService
+from ..services.index_daily_service import IndexDailyService
 
 class ServicesModule(Module):
     @provider
@@ -16,3 +17,8 @@ class ServicesModule(Module):
     @provider
     def provide_daily_basic_service(self, session: SessionBase) -> DailyBasicService:
         return DailyBasicService(session)
+
+    @provider
+    def provide_index_basic_service(self, session: SessionBase) -> IndexDailyService:
+        return IndexDailyService(session)
+
